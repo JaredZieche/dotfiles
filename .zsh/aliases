@@ -37,10 +37,10 @@ alias ave='ansible-vault edit'
 alias mfa='source ~/gettoken.sh'
 alias asc='aws ssm start-session --target'
 alias asm='_asm(){ aws ssm start-session --target=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=[$1]" --query "Reservations[].Instances[].InstanceId" --output text)}; _asm'
-alias ecrlogin='aws ecr get-login-password --region us-gov-west-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-gov-west-1.amazonaws.com'
+alias ecrlogin='aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com'
 alias ecrpush='_ecrpush(){ docker push "$(aws sts get-caller-identity --query Account --output text)".dkr.ecr.us-gov-west-1.amazonaws.com/"$1"}; _ecrpush'
 alias ecrpull='_ecrpull(){ docker pull "$(aws sts get-caller-identity --query Account --output text)".dkr.ecr.us-gov-west-1.amazonaws.com/"$1"}; _ecrpull'
-alias adfslog='aws-adfs login --adfs-host=prod.adfs.federation.va.gov --provider-id urn:amazon:webservices:govcloud --region us-gov-west-1 --no-ssl-verification'
+alias adfslog='_adfslog(){ aws-adfs login --adfs-host=prod.adfs.federation.va.gov --provider-id urn:amazon:webservices:govcloud --region us-gov-west-1 --no-ssl-verification --assertfile ~/.aws/assertb64 --profile "$1"}; _adfslog'
 alias aecd='_aecd(){ aws ec2 describe-instances --filter "Name=tag:Name,Values=[$1]" --query "Reservations[].Instances[].InstanceId"}; _aecd'
 
 #IPA
@@ -49,3 +49,7 @@ alias ipajoin='_ipajoin(){ ipa-client-install --domain="$1".bip.va.gov --realm="
 #Build harness
 alias bhiamp='_bhiamp(){ docker run -e "ENV=$3" --rm -it -v ~/.git-credentials:/root/.git-credentials -v "$HOME/.aws":/root/.aws/ -v $(pwd):/src/ "$1".dkr.ecr.us-gov-west-1.amazonaws.com/bip/build-harness:2022-03-04.1 $2 $3 $4 }; _bhiamp'
 alias bhiama='_bhiama(){ docker run --rm -it -v ~/.git-credentials:/root/.git-credentials -v "$HOME/.aws":/root/.aws/ -v $(pwd):/src/ "$1".dkr.ecr.us-gov-west-1.amazonaws.com/bip/build-harness:2022-03-04.1 $2 $3 }; _bhiama'
+
+# lima/nerdctl for arm64 arch
+alias docker='lima nerdctl'
+alias lmctl='limactl'
