@@ -252,6 +252,36 @@ function adfs_login(){
   aws-adfs login --adfs-host=prod.adfs.federation.va.gov --provider-id urn:amazon:webservices:govcloud --region us-gov-west-1 --no-ssl-verification --assertfile $SAML_DEST_FILE --profile ${1}
   # setting profile var
   # exporting AWS profile vars
+  export AWS_REGION=${2}
+  export AWS_DEFAULT_REGION=${2}
   export AWS_PROFILE=${1}
   export AWS_DEFAULT_PROFILE=${1}
+}
+
+# GH
+
+function gh_latestTag() {
+  owner="${1}"
+  repo="${2}"
+  gh api graphql -q '.data | .repository | .refs | .edges[] | .node | .name' -F owner="${owner}" -F name="${repo}" -f query='
+  query($name: String!, $owner: String!) {
+    repository(owner: $owner, name: $name) {
+      refs(refPrefix: "refs/tags/", first: 1, orderBy: {field: TAG_COMMIT_DATE, direction: DESC}) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+  }'
+}
+
+function k_node_drain() {
+  local node=${1}
+  k drain --force --ignore-daemonsets --delete-emptydir-data --grace-period -1 --timeout 0s $node
+}
+function k_node_pods() {
+  local node=${1}
+  k get pods -A --field-selector spec.nodeName=$node
 }

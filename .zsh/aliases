@@ -22,6 +22,9 @@ alias kgsn='kubectl get secret -n'
 alias kgssn='kubectl get statefulset -n'
 alias wkev='watch "kubectl get events --sort-by .lastTimestamp | tail -n 20"'
 alias kev='kubectl get events --sort-by .lastTimestamp'
+alias kne='k get nodes --selector karpenter.sh/provisioner-name=ephemeral'
+alias knd='k get nodes --selector karpenter.sh/provisioner-name=default'
+alias knc='k get nodes --selector karpenter.sh/provisioner-name=confluent'
 # Terraform
 alias tf='terraform'
 
