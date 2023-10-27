@@ -3,7 +3,10 @@ Bring this config to a new machine:
 
 Automated:
 
-sh -c "`curl -fsSL https://raw.githubusercontent.com/jaredzieche/dotfiles/master/install.sh`"
+```shell
+sh -c `curl -fsSL https://raw.githubusercontent.com/jaredzieche/dotfiles/master/install.sh`
+```
+
 Manually:
 
 echo ".cfg" >> .gitignore
