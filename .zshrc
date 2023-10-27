@@ -8,6 +8,7 @@
 # If you come from bash you might have to change your $PATH.
 if [[ $(uname) == 'Darwin' ]]; then
   export PATH=/opt/homebrew/Cellar/gnu-sed/4.8/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/bin:$HOME/node_modules/.bin/:$HOME/.luarocks/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+  export HOMEBREW_NO_AUTO_UPDATE=1
 else
   export PATH=$HOME/node_modules/.bin/:$HOME/.luarocks/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 fi
@@ -55,24 +56,13 @@ export ZSH="$HOME/.oh-my-zsh"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.zsh/
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions docker docker-compose)
+plugins=(git zsh-autosuggestions docker docker-compose gh)
+
 
 source $ZSH/oh-my-zsh.sh
 set -o vi
-# User configuration
-# RBENV
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
-#export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-#export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - --no-rehash)"
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -90,16 +80,19 @@ source <(kubectl completion zsh)
 complete -F __start_kubectl k
 # AWS CLI Completion
 if [[ $(uname) == 'Darwin' ]]; then
-  complete -C '/opt/homebrew/bin/aws_completer' aws
+  complete -C '~/.local/bin/aws_completer' aws
 fi
+# Policy Sentry completion
+# eval "$(_POLICY_SENTRY_COMPLETE=source_zsh policy_sentry)"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 # Alias
 source ~/.zsh/aliases
 source ~/.zsh/functions.zsh
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 
 eval "$(starship init zsh)"
 
-[[ -s "/home/jzieche/.gvm/scripts/gvm" ]] && source "/home/jzieche/.gvm/scripts/gvm"
+[[ -s "${HOME}/.gvm/scripts/gvm" ]] && source "${HOME}/.gvm/scripts/gvm"

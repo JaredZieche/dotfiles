@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 branch=$1
 shell=$2
 

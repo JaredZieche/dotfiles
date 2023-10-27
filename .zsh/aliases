@@ -25,6 +25,8 @@ alias kev='kubectl get events --sort-by .lastTimestamp'
 alias kne='k get nodes --selector karpenter.sh/provisioner-name=ephemeral'
 alias knd='k get nodes --selector karpenter.sh/provisioner-name=default'
 alias knc='k get nodes --selector karpenter.sh/provisioner-name=confluent'
+alias kpfargo='k port-forward service/argocd-server -n argocd 8080:443'
+alias karpp='kubectl -n karpenter get provisioner -o custom-columns="NAME:.metadata.name,CPU-PROVISIONED:.status.resources.cpu,CPU-LIMIT:.spec.limits.resources.cpu,MEM-PROVISIONED:.status.resources.memory,MEM-LIMIT:.spec.limits.resources.memory,POD-COUNT:.status.resources.pods"'
 # Terraform
 alias tf='terraform'
 
@@ -40,19 +42,17 @@ alias ave='ansible-vault edit'
 alias mfa='source ~/gettoken.sh'
 alias asc='aws ssm start-session --target'
 alias asm='_asm(){ aws ssm start-session --target=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=[$1]" --query "Reservations[].Instances[].InstanceId" --output text)}; _asm'
-alias ecrlogin='aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com'
-alias ecrpush='_ecrpush(){ docker push "$(aws sts get-caller-identity --query Account --output text)".dkr.ecr.us-gov-west-1.amazonaws.com/"$1"}; _ecrpush'
-alias ecrpull='_ecrpull(){ docker pull "$(aws sts get-caller-identity --query Account --output text)".dkr.ecr.us-gov-west-1.amazonaws.com/"$1"}; _ecrpull'
-alias adfslog='_adfslog(){ aws-adfs login --adfs-host=prod.adfs.federation.va.gov --provider-id urn:amazon:webservices:govcloud --region us-gov-west-1 --no-ssl-verification --assertfile ~/.aws/assertb64 --profile "$1"}; _adfslog'
 alias aecd='_aecd(){ aws ec2 describe-instances --filter "Name=tag:Name,Values=[$1]" --query "Reservations[].Instances[].InstanceId"}; _aecd'
-
-#IPA
-alias ipajoin='_ipajoin(){ ipa-client-install --domain="$1".bip.va.gov --realm="$1^^".BIP.VA.GOV -p $2 -W --server=idm."$1".bip.va.gov --force-join --mkhomedir }'
-
-#Build harness
-alias bhiamp='_bhiamp(){ docker run -e "ENV=$3" --rm -it -v ~/.git-credentials:/root/.git-credentials -v "$HOME/.aws":/root/.aws/ -v $(pwd):/src/ "$1".dkr.ecr.us-gov-west-1.amazonaws.com/bip/build-harness:2022-03-04.1 $2 $3 $4 }; _bhiamp'
-alias bhiama='_bhiama(){ docker run --rm -it -v ~/.git-credentials:/root/.git-credentials -v "$HOME/.aws":/root/.aws/ -v $(pwd):/src/ "$1".dkr.ecr.us-gov-west-1.amazonaws.com/bip/build-harness:2022-03-04.1 $2 $3 }; _bhiama'
 
 # lima/nerdctl for arm64 arch
 alias docker='lima nerdctl'
 alias lmctl='limactl'
+alias pols='policy_sentry'
+alias knit='k get nodes -o json | jq -r ".items | .[] | .metadata | .labels | .[node.kubernetes.io/instance-type]"'
+
+# proxy
+alias spp='export https_proxy=http://127.0.0.1:11110; export http_proxy=http://127.0.0.1:11110'
+alias usp='unset http_proxy https_proxy ftp_proxy'
+alias cpwdev='security find-generic-password -a jzieche -s idm -w | pbcopy'
+alias cpwprod='security find-generic-password -a jzieche -s idm-prod -w | pbcopy'
+alias kdn='kubectl describe node'
