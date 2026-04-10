@@ -7,7 +7,7 @@
 
 # If you come from bash you might have to change your $PATH.
 if [[ $(uname) == 'Darwin' ]]; then
-  export PATH=/opt/homebrew/Cellar/gnu-sed/4.8/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/bin:$HOME/node_modules/.bin/:$HOME/.luarocks/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+  export PATH=${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/Cellar/gnu-sed/4.8/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/bin:$HOME/node_modules/.bin/:$HOME/.luarocks/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
   export HOMEBREW_NO_AUTO_UPDATE=1
 else
   export PATH=$HOME/node_modules/.bin/:$HOME/.luarocks/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
@@ -56,13 +56,11 @@ export ZSH="$HOME/.oh-my-zsh"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.zsh/
 
-plugins=(git zsh-autosuggestions docker docker-compose gh)
+plugins=(git zsh-autosuggestions docker docker-compose gh direnv)
 
 
 source $ZSH/oh-my-zsh.sh
 set -o vi
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -96,3 +94,8 @@ source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 eval "$(starship init zsh)"
 
 [[ -s "${HOME}/.gvm/scripts/gvm" ]] && source "${HOME}/.gvm/scripts/gvm"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/opt/homebrew/sbin:$PATH"
