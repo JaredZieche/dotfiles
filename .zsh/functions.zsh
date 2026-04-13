@@ -269,7 +269,7 @@ function launch() {
     elif [[ "$tool" == "argo" ]]; then
         kubectl -n argocd-tenant get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | pbcopy
         echo "Initial admin password for Argo has been copied to clipboard."
-    elif [[ "$tool == "harness" ]]; then
+    elif [[ "$tool" == "harness" ]]; then
     fi
 
     # Construct the URL
