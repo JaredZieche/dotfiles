@@ -1,0 +1,36 @@
+[credential "https://github.com"]
+  helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+  helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[pull]
+	rebase = true
+[core]
+	autocrlf = input
+[init]
+	defaultBranch = main
+[credential]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+  helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[http]
+	postBuffer = 524288000
+[push]
+	autoSetupRemote = true
+[user]
+	email = jaredzieche@users.noreply.github.com
+	name = jaredzieche
+
+[includeIf "gitdir:~/projects/work"]
+    path = ~/projects/work/.gitconfig
+
+[includeIf "gitdir:~/projects/personal"]
+    path = ~/projects/personal/.gitconfig
